@@ -1,0 +1,77 @@
+﻿.ShowOrderDisplay {
+    margin: 115px auto;
+    width: 1200px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.OrderTime {
+    display: flex;
+    justify-content: right;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+    .OrderTime div {
+        color: #9F4E27;
+    }
+
+.Column {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.Flex {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.LogoFrame {
+    height: 80px;
+    width: 80px;
+    clip-path: circle(50% at 50% 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .LogoFrame img {
+        height: 80px;
+        width: 80px;
+    }
+
+.ShopName {
+    margin: 10px;
+    font-family: monospace;
+    color: #9F4E27;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.TotalPrice {
+    border-top: 1px solid;
+    padding-top: 10px;
+    color: #9F4E27;
+    font-family: monospace;
+    font-size: 26px;
+    font-weight:700;
+}
+
+.Deletebtn {
+    display: flex;
+    justify-content: right;
+    cursor: pointer;
+}
+
+.CursorPointer {
+    cursor: pointer;
+}
+
+.CursorDefault {
+    cursor: default;
+}

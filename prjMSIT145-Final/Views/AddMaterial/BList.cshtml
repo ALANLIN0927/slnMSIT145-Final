@@ -1,0 +1,182 @@
+﻿@{
+	Layout = "_BusinessLayout";
+	ViewData["Title"] = "BList";
+}
+@section Styles{
+	<link rel="stylesheet" href="@Url.Content("~/css/ProductCreate.css")">
+	<link rel="stylesheet" href="@Url.Content("~/css/ProductList.css")">
+
+	<style>
+		.btnDeleteCheck {
+			border: none;
+			width: 15%;
+			color: orange;
+			font-size: 15px;
+			background-color: transparent;
+		}
+
+		.btnDeleteCancel {
+			border: none;
+			width: 15%;
+			color: black;
+			font-size: 15px;
+			background-color: transparent;
+		}
+
+	</style>
+}
+@*刪除按鈕彈窗*@
+<div class="modal fade" id="btnDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header" style="width:100%">
+				<h5 class="modal-title" id="exampleModalLabel">提醒</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				確定要刪除嗎?
+			</div>
+			<div class="modal-footer" style="width:100%">
+				<button type="button" class="btnDeleteCancel" data-bs-dismiss="modal">取消</button>
+				<a id="linkDelete"><button style="width:70px;" class="btnDeleteCheck" data-bs-dismiss="modal">刪除</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+
+	@*編輯的彈窗*@
+	<div class="editModal modal fade" id="btnEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" style="max-width:30%;">
+			<div class="modal-content" style=" box-sizing:border-box; padding:20px;">
+				<div class="modal-header" style="padding:0;">
+					<form method="post" enctype="multipart/form-data" action="BEdit" style="width:100%;">
+                        <input type="hidden" name="BFid" id="BFid" />
+						<input type="hidden" name="Fid" id="Fid"/>
+						<div class="topdiv">
+							<button type="button" data-bs-dismiss="modal" style="background-color:transparent ;border:none; width:30px; height:20px; position:absolute; top:20px; left:20px;"><img src="~/images/Business/exit.png" style="width:100%; height:100%;" /></button>
+							<input id="txtOptionName" name="OptionName" class="inputtext" type="text" placeholder=" 輸入配料名稱....." />   @*配料名稱*@
+
+							<input id="btnSubmit" class="butt" type="submit" value="儲存" style="margin-left:20px;"/>
+						</div>
+						<select id="selType" class="select" name="OptionGroupName" style="margin:5px 0;  border-radius:5px;"></select>  @*選擇類別*@
+
+						<hr style="border:1px dashed #000; height:1px">
+						<h6 id="h6">價格</h6>
+						<label for="txtPrice">預設價格</label>
+						<input type="text" id="txtPrice" name="UnitPrice" style="margin-bottom:15px; border-radius:10px; border:1px solid; padding:0 5px;"/>   @*配料價格*@
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@*列表*@
+	<div class="top">
+		<div>
+			<h3 id="h2">配料</h3>
+		</div>
+		<div class="topbutton">
+			<a href="@Url.Content("~/AddMaterial/BCreate")"><input class="insertbutton" type="button" value="+新增配料"/></a>
+			<a href="@Url.Content("~/Type/BMaterialTypeAddnEdit")"><input style="width:150px; margin-left:5px;" class="insertbutton" type="button" value="新增/編輯類別"/></a>
+		</div>
+	</div>
+	<table id="table_id" class="table table-hover stripe">
+		<thead>
+		<th>配料名稱</th>
+		<th>配料價格</th>
+		<th>配料類別</th>
+		<th>選項</th>
+		</thead>
+		<tbody id="tbody">
+		</tbody>
+	</table>
+</div>
+
+
+@section Scripts{
+	
+	<script>
+		const tbody = document.querySelector("#tbody");
+		const btnDelete = document.getElementsByName("btnDelete") //點擊刪除配料
+		const btnEdit = document.getElementsByName("btnEdit"); //編輯按鈕
+		const linkDelete = document.querySelector("#linkDelete"); //確定刪除配料
+		const selType = document.querySelector("#selType"); //配料類別
+		const txtPrice = document.querySelector("#txtPrice");
+
+		list();
+		async function list() {
+			
+			const response = await fetch(`@Url.Content("~/AddMaterial/BMaterialList")`);
+			const data = await response.json();
+			let result = document.createDocumentFragment();
+			result = "";
+			data.forEach(function (item, index) {
+				
+				result += `
+							<tr>
+							<input type="hidden" name="${item.fid}" value="${item.fid}" id="${item.fid}"/>
+							<input type="hidden" name="${item.bFid}" value="${item.bFid}" id="${item.bFid}"/>
+
+							<td>${item.optionName}</td>
+							<td>$${item.unitPrice}</td>
+							<td >${item.optionGroupName}</td>
+							<td>
+								<button class="buteditgar" name='btnEdit' data-bs-toggle="modal"  data-bs-target="#btnEditModal"><img src="../images/Business/edit.png">編輯</button>
+								<button class="buteditgar" name='btnDelete' data-bs-toggle="modal" data-bs-target="#btnDeleteModal"><img src="../images/Business/garbage.png">刪除</button>
+					        </td>
+							</tr>`
+			});
+			tbody.innerHTML = result;
+			console.log(data);
+			
+			//確定刪除配料
+			btnDelete.forEach(function (click) {
+				click.addEventListener("click",function(){
+					const id = this.parentElement.parentElement.firstElementChild;
+
+					linkDelete.addEventListener("click",async function(){
+						linkDelete.setAttribute("href",`@Url.Content("~/AddMaterial/BDelete/${id.value}")`);
+					})
+				})
+			})
+
+			//點選編輯按鈕
+			btnEdit.forEach(function(btn){
+				btn.addEventListener("click",function(){
+					loadGroup();
+					const Fid = document.querySelector("#Fid");
+					const txtOptionName = document.querySelector("#txtOptionName");
+					const txtPrice = document.querySelector("#txtPrice");
+
+					const cell = this.parentElement.parentElement;
+
+					
+					Fid.value = cell.children[0].value;
+					txtOptionName.value  = cell.children[2].innerHTML;
+					selType.innerHTML = `<option>${cell.children[4].innerHTML}</option>`;
+					txtPrice.value = cell.children[3].innerHTML.substring(1);
+					document.querySelector("#BFid").value = cell.children[1].value;
+
+				})
+			})
+			////套用bootstrap,dataTable功能
+			$("#table_id").DataTable();
+		}
+		
+		//載入配料類別
+			async function loadGroup(){
+				const response = await fetch("@Url.Content("~/Type/BOptionGroup")");
+				const datas = await response.json();
+				let frag = document.createDocumentFragment();
+				frag = "";
+				datas.forEach(function(item,index){
+					if (item.optionGroupName !== selType.value)
+					frag += `<option>${item.optionGroupName}</option>`
+				})
+				selType.innerHTML += frag;
+				console.log("click");
+			}
+	</script>
+	<script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
+}

@@ -1,0 +1,294 @@
+﻿@model prjMSIT145_Final.ViewModels.CNormalMemberViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@section Styles{
+        <style>
+
+        </style>
+        <link rel="stylesheet" href="~/css/Customer_css/Edit.css">
+        
+
+}
+
+
+
+
+
+ <form asp-action="edit" enctype="multipart/form-data" name="editform" id="editid">
+
+    
+  <div class="wrap">
+
+    <div class="leftgroup">
+        <div class="card1">
+            <div class="backcolor">
+                       @{
+                        if (Model.MemberPhotoFile!=null){
+                            <img style="border-radius:80px" src="~/images/Customer/Member/@Model.MemberPhotoFile" class="dog">
+                                }
+                        else{
+                                     <img style="border-radius:80px" src="@Url.Content("~/images/Customer/Member/photo.png")" class="dog">
+                        }
+
+                       }
+                       
+                    <div class="text6">@Model.MemberName</div>
+                    <div class="text6">@Model.Phone</div>
+            </div>
+        </div>
+        <div class="card2">
+                <div class="text2"><img class="imgselect" src="@Url.Content("~/images/Customer/Member/editmember.png")" /><a class="aclass" href="@Url.Content("~/CustomerMember/Edit")">個人檔案</a></div>
+                <div class="text2"><img class="imgselect" src="@Url.Content("~/images/Customer/Member/alterpasswordkey.png")" /><a class="aclass" href="@Url.Content("~/CustomerMember/Alterpassword")">修改密碼</a></div>
+                <div class="text2"><img class="imgselect" src="@Url.Content("~/images/Customer/Member/salemember.png")" /><a class="aclass" href="@Url.Content("~/Coupon/CCoupons2Member")">我的券夾</a></div>
+        </div>
+    </div>
+        <div class="card3">
+            <div class="card30">
+        <h2 class="title2"><img src="@Url.Content("~/images/Customer/Member/person.png")" />個人檔案</h2>
+        <div class="dashed"></div>
+        <input type="hidden"name="Fid" value="@Model.Fid"/>
+      
+        <div class="divheadpic">
+                <div class="aui-info">
+                 @{ 
+                    if(Model.MemberPhotoFile!=null){
+                                <img src="~/images/Customer/Member/@Model.MemberPhotoFile" id="img-txz" style="width:150px;height:150px;border-radius:80px" class="aui-img-round user-img" />
+                                }
+                       else{
+                                            <img src="@Url.Content("~/images/Customer/Member/photo.png")" id="img-txz" style="width:150px;height:150px;border-radius:80px" class="aui-img-round user-img" />
+                       }
+
+
+                  } 
+                 <input class="fileInput" type="file" accept="image/*" id="file-txz" name="photo" onchange="upload('#file-txz','#img-txz');" value="" />
+                </div>
+                <span class="sapnphoto">點擊頭像預覽及修改</span>
+                <input type="hidden" name="MemberPhotoFile" value="@Model.MemberPhotoFile" />
+                  
+        </div>
+        <span class="text3">
+            <p class="color">*</p>
+                    <p class="text4">真實姓名<span class="necessspan">(必填)</span></p>
+        </span>
+        <div class="divhint">
+                    <div class="div1">
+                        <input type="text" class="input" name="MemberName" value="@Model.MemberName" id="MemberName" autofocus />
+                    </div>
+                        <span id="namecorrect" class="spanerrormessage"></span>
+        </div>
+
+         <span class="text3">
+             <p class="color">*</p>
+                        <p class="text4">電子信箱<span class="necessspan">(必填)</span><span class="Formatspan">(信箱格式)</span></p>
+          </span>
+          <div class="divhint">
+                    <div class="div1">
+                        <input type="email" class="input" name="Email" value="@Model.Email" id="Email" />
+                     </div>
+                        <span id="emailcorrect" class="spanerrormessage"></span>
+            </div>
+
+
+        <div class="text4">性別</div><br>
+        <div class="display">
+            @{
+                if(Model.Gender=="1"){
+                                                                    <input id="radiogirl" type="radio" class="text5" name="Gender" value="0" />
+                                                                    <label>女</label>
+                                                                    <input id = "radioboy"type = "radio" class="text5" name="Gender" value="1" checked />
+                                                                    <label>男</label>
+                }else{
+                                                                    <input id="radiogirl" type="radio" class="text5" name="Gender" value="0" checked />
+                                                                    <label>女</label>
+                                                                    <input id = "radioboy"type = "radio" class="text5" name="Gender" value="1"  />
+                                                                    <label>男</label>
+                    }
+                }
+
+            </div><br>
+            <span class="text3"> 
+                <p class="text4">生日</p>
+            </span>
+            <div class="div1">
+            @{
+             
+                if (Model.Birthday != null){
+                    string st;
+                    st = Convert.ToDateTime(Model.Birthday).ToString("yyyy-MM-dd");
+                  
+                                                            <input id="birthid" type="date" class="date" name="Birthday" value="@st"/>
+              
+                }
+                else{
+                                                             <input id="birthid" type="date" class="date" name="Birthday" value=""/>
+                }
+            
+            }
+            </div>
+        <span class="text3"> 
+            <p class="text4">居住地</p>
+        </span>
+        <div class="display">
+            <div class="div2">
+                <select type="text "id="city" class="input" name="AddressCity" >
+                    <option> @Model.AddressCity</option>
+                  
+                </select>
+            </div>
+            <div class="div2">
+                <select type="text "id="area" class="input" name="AddressArea">
+                    <option>@Model.AddressArea</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="dashed"></div>
+
+        <div class="display">
+                    <input type="submit" class="enter" value="修改" id="submitid"  />
+
+        </div>
+                <input type="button" class="democorrect" id="democorrectid" value="" />
+                <input type="button" class="demoerror" id="demoerrorid" value="" />
+            </div>
+        </div>
+    </div>
+    </form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        
+        <script src="~/js/NormalMemberAddress/taiwan_districts.js"></script>
+        <script type="text/javascript">
+
+             function changcity(){
+                 for (let item of data) { $("#city").append(`<option>${item.name}</option>`); }
+
+                  $("#city").change(function ()
+            {
+                $("#area").find("option").remove();
+                let city = $(this).val();
+                for (let item of data)
+                {
+                    if (city == item.name)
+                    {
+                        for (let district of item.districts)
+                            $("#area").append(`<option>${district.name}</option>`);
+                        break;
+                    }
+                }
+            });
+            };
+             changcity();    
+
+            var upload= function (c,d){
+                "use strict";
+                var $c= document.querySelector(c),
+                    $d=document.querySelector(d),
+                    file =$c.files[0],
+                        reader =new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload=function (e){
+
+                            $d.setAttribute("src", e.target.result);
+                        };
+            };
+
+        var submitbtn = document.getElementById("submitid");                //按鈕
+
+        document.getElementById("MemberName").addEventListener("change", checkPwd);                           //名子
+        function checkPwd() {
+            var nameobj = document.getElementById("MemberName");           
+            var spnameobj = document.getElementById("namecorrect");
+            var nameval = nameobj.value;
+  
+            if (nameval =="") {
+                spnameobj.innerHTML = "<img src='@Url.Content("~/images/Customer/Member/error.png")'/>此欄位必填";
+                submitbtn.setAttribute('disabled', 'disabled');
+                return;
+            }
+            else {
+                spnameobj.innerHTML = "";
+                submitbtn.removeAttribute('disabled');
+            }
+        };
+
+
+        document.getElementById("Email").addEventListener("change", checkEmail);                              //email
+        function checkEmail() {
+            var emailobj = document.getElementById("Email");
+            var spnemailobj = document.getElementById("emailcorrect");
+            var emailval = emailobj.value;
+
+            if (emailval == "") {
+                spnemailobj.innerHTML = "<img src='@Url.Content("~/images/Customer/Member/error.png")'/>此欄位必填";
+                submitbtn.setAttribute('disabled', 'disabled');
+                return;
+            }
+            else {
+                spnemailobj.innerHTML = "";
+                submitbtn.removeAttribute('disabled');
+            }
+        };
+
+        submitbtn.addEventListener('click',async()=>{
+
+            event.preventDefault();
+            let formdata = new FormData(document.editform);
+            const request = await fetch(`@Url.Content("~/CustomerMember/Editverify")`, {
+                body: formdata,
+                method:"Post",
+            })
+            const data=await request.json();
+            
+            if(data=="修改完成"){
+                alert(data);
+                document.getElementById('editid').submit();
+            }
+            else if(data=="名子不能空值"){
+                document.getElementById("namecorrect").innerHTML ="<img src='@Url.Content("~/images/Customer/Member/error.png")'/>此欄位必填";
+            }
+            else if (data=="信箱不能空值"){
+                document.getElementById("emailcorrect").innerHTML = "<img src='@Url.Content("~/images/Customer/Member/error.png")'/>此欄位必填";
+            }
+            else if(data=="Email格式錯誤"){
+               document.getElementById("emailcorrect").innerHTML = "<img src='@Url.Content("~/images/Customer/Member/error.png")'/>Email格式錯誤";
+            }
+
+        });
+
+
+
+
+
+
+
+
+
+        document.getElementById("democorrectid").addEventListener('click', () => {                             //正確DEMO鍵
+            
+            document.getElementById("MemberName").value="林阿宏"
+            document.getElementById("Email").value = "a29816668@gmail.com";
+            document.getElementById("radiogirl").setAttribute("checked", "checked");
+            checkPwd();
+            checkEmail();
+        });
+
+        document.getElementById("demoerrorid").addEventListener('click', () => {                                 //錯誤
+            document.getElementById("MemberName").value = "林小明";
+            document.getElementById("Email").value = "A123";
+            
+            checkPwd();
+            checkEmail();
+
+        });
+   </script>
+
+
+
+}

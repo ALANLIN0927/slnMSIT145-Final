@@ -1,0 +1,358 @@
+.shopinfocard {
+    margin: 30px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shopinfoarea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.shopinfo {
+    background-color: #FFFFFF;
+    width: 420px;
+    height: 220px;
+    border-radius: 20px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-left: solid 10px #9F4E27;
+    border-top: solid 10px #9F4E27;
+    border-right: solid 10px #9F4E27;
+}
+
+.shoptitle {
+    margin: 0px 0px 0px 10px;
+    font-family: monospace;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.Shoplogo {
+    width: 70px;
+    height: 70px;
+    clip-path: circle(50% at 50% 50%);
+    margin: 0px 15px 0px 10px;
+}
+
+.infoblock {
+    width: 350px;
+    height: 200px;
+}
+
+.InfoArea {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 7px 0px;
+    font-size: 18px;
+    margin-left: 10px;
+    font-family: monospace;
+}
+
+    .InfoArea p {
+        font-size: 18px;
+        margin-left: 10px;
+        font-family: ui-monospace;
+    }
+
+    .InfoArea img {
+        margin-left: 5px;
+    }
+
+.btnbar {
+    width: 420px;
+    height: 85px;
+    background-color: #9F4E27;
+    display: flex;
+    justify-content:space-between;
+    padding: 5px 30px;
+    border-radius: 0px 0px 0px 20px;
+}
+
+.iconwrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Midimg {
+    width: 75px;
+    height: 75px;
+    margin: 10px 0px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    clip-path: circle(50% at 50% 50%);
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btntext {
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.ADarea {
+    background-color: #FFFFFF;
+    width: 720px;
+    height: 365px;
+    border-radius: 0px 20px 20px 0px;
+    margin: 0px 0px 0px 0px;
+    overflow: hidden;
+}
+
+    .ADarea img {
+        width: 720px;
+        height: 365px;
+    }
+
+.ShowClassdisplay {
+    margin: 30px auto;
+    width: 1200px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.ShowClassregion {
+    margin: 0px 0px 0px 30px;
+}
+
+    .ShowClassregion:first-child {
+        margin: 0px 0px 0px 0px;
+    }
+
+.productclass {
+    background-color: #FFFFFF;
+    width: 370px;
+    padding: 5px;
+    margin: 0px 0px 25px 0px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px #5a5555;
+}
+
+.classtitle {
+    color: #9F4E27;
+    margin: 10px;
+}
+
+.productitem {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 0px 0px 10px 0px;
+    border-bottom: 0.5px solid rgb(212, 207, 207);
+    align-items: center;
+}
+
+    .productitem:last-child {
+        padding: 0px;
+        border-bottom: none;
+    }
+
+.PhotoandName {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+    .PhotoandName img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .PhotoandName p {
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+.AmountBall {
+    width: 25px;
+    height: 25px;
+    clip-path: circle(50% at 50% 50%);
+    background-color: #9F4E27;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    margin-left: 10px;
+    font-size: 16px;
+    font-family: Carlito;
+}
+
+.producttext {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.productNotsale {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #595757;
+    padding: 5px;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.CursorPointer {
+    cursor: pointer;
+}
+
+.CursorDefault {
+    cursor: default;
+}
+
+
+
+
+
+
+/*---------------------以下為Modal使用CSS---------------------*/
+.ModalTitle {
+    color: #9F4E27;
+}
+
+.ProductPhoto {
+    width: 449px;
+    height: 449px;
+    margin-bottom:10px;
+    border-radius: 20px;
+}
+
+.MemoArea {
+    width: 449px;
+    margin: 10px 0px 10px 0px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: monospace;
+    border-bottom: 2px solid #9F4E27;
+    padding-bottom:10px;
+}
+
+.OptionGroupTitle {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0px 10px 0px;
+}
+
+.NeedChoose {
+    color: magenta;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.OptionsArea {
+    margin: 10px auto;
+    width: 449px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.Optiondiv {
+    margin: 0px 0px 8px 7px;
+    width: 125px;
+    background-color: #9F4E27;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .Optiondiv:nth-child(3n+1) {
+        margin: 0px 0px 8px 0px;
+    }
+
+    .Optiondiv p {
+        color: #FFFFFF;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+.NChoosedOptiondiv {
+    background-color: #e9cbbc;
+}
+
+.DisplayColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 250px;
+}
+
+.TotalPrice {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.DisplayFlex {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.Minusbtn {
+    border: 2px solid #9F4E27;
+    border-radius: 5px 0px 0px 5px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #FFFFFF;
+    font-family: Arial;
+    padding: 2px 20px;
+    background-color: #9F4E27;
+}
+
+.Countarea {
+    border-top: 2px solid #9F4E27;
+    border-bottom: 2px solid #9F4E27;
+    font-size: 20px;
+    font-weight: 500;
+    color: #9F4E27;
+    font-family: Arial;
+    padding: 2px 50px;
+    width: 40px;
+    text-align: center;
+}
+
+.Plusbtn {
+    border: 2px solid #9F4E27;
+    border-radius: 0px 5px 5px 0px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #FFFFFF;
+    font-family: Arial;
+    padding: 2px 20px;
+    background-color: #9F4E27;
+}
+
+.Submitbtn {
+    width: 180px;
+    padding: 15px;
+    background-color: #9F4E27;
+    border: 0px solid #9F4E27;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 600;
+}

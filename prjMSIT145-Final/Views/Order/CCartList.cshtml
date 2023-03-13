@@ -1,0 +1,89 @@
+﻿@model List<prjMSIT145_Final.ViewModels.VOrdersViewModel>
+@{
+    Layout = "_CustomerLayout";
+    ViewData["Title"] = "CList";
+}
+
+@section Styles{
+    <link href="~/css/Customer_css/COrderList.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/Customer_css/ShibaJump/style.css">
+    <style>
+
+    </style>
+}
+
+<div class="ShowOrderDisplay" id=app>
+    @{
+        foreach (var item in Model)
+        {
+            @if (item.OrderState == "0")
+            {
+                <mochi-box shiba="random" class="CursorPointer" id="Order @item.Fid">
+                    <div class="OrderTime">
+                        <div>@item.OrderTimeMM/@item.OrderTimedd @item.OrderTimeHH:@item.OrderTimeminute</div>
+                    </div>
+                    <div class="Column">
+                        <div class="Flex">
+                            <div class="LogoFrame">
+                                <img src="~/images/@item.LogoImgFileName" />
+                            </div>
+                        </div>
+                        <div class="Column">
+                            <h4 class="ShopName">@item.MemberName</h4>
+                            <div class="TotalPrice">共 @item.TotalAmount 元</div>
+                        </div>
+                    </div>
+                    <div class="Deletebtn">
+                        <img src="~/images/Customer/OrderList/delete 24x24.png" id="DEL @item.Fid" />
+                    </div>
+                </mochi-box>
+            }
+        }
+    }
+</div>
+
+@section Scripts{
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script>
+    <script src="~/css/Customer_css/ShibaJump/script.js"></script>
+    <script>
+        let OrderDisplayArea = document.getElementById("app");
+        let NewList = "";
+        @{
+            foreach (var item in Model)
+            {
+                @if (item.OrderState == "0")
+                {
+                    @:document.getElementById("DEL @(item.Fid)").addEventListener("click", function (e) {
+                    @:e.stopPropagation();
+                    @:DeleteOrderdatas(@(item.Fid));
+                    @:});
+                }
+            }
+        }
+
+            async function DeleteOrderdatas(OFid) {
+                const response = await fetch(`@Url.Content("~/Order/CCartDelete?OrderFid=${OFid}")`);
+                const datas = await response.json();
+                location.href = "/Order/CCartList";
+            }
+
+        @{
+            foreach (var item in Model)
+            {
+                @if (item.OrderState == "0")
+                {
+                    @:document.getElementById("Order @(item.Fid)").addEventListener("click", function () {
+                    @:SendOrderdatas(@(item.Fid));
+                    @:});
+                }
+            }
+        }
+
+            @*async*@ function SendOrderdatas(OFid) {
+                @*const response = await fetch(`@Url.Content("~/Order/CCartSend?OrderFid=${OFid}")`);
+                const datas = await response.json();*@
+                    location.href = `/OrderDetial/CartList?Fid=${OFid}`;
+            }
+    </script>
+}
+

@@ -1,0 +1,175 @@
+﻿.logoBottom{
+    bottom:8%;
+}
+.logoBottomPageEnd
+{
+    bottom:13%;
+}
+
+.azureLogo {
+    width: 70px;
+    height: 60px;
+    position: fixed;
+    bottom: 5%;
+    left: 40px;
+    transition: 0.2s;
+}
+
+    .azureLogo img {
+        width: 100%;
+        height: 100%;
+    }
+    /*走路動畫*/
+    .walk{
+   animation-name:step;
+    animation-duration:1.3s;
+    animation-iteration-count:infinite
+    }
+    @keyframes step{
+        from {
+            height:20px;
+             opacity: 10%;
+            bottom: 90px;
+            filter: drop-shadow(5px 10px 5px rgba(0,0,0,0.5));
+        }
+        to {
+            height: 40px;
+           opacity: 90%;
+            bottom: 30px;
+            filter: drop-shadow(5px 10px 5px rgba(0,0,0,2));
+        }
+    }
+.azure {
+    position: fixed;
+    left: 40px;
+    bottom: 16%;
+    margin-top: 50px;
+    height: 70%;
+}
+/* 腳掌印 */
+.logoDiv {
+    width: 70px;
+    height: 60px;
+    position: fixed;
+    left: 150px;
+    bottom: 5% ;
+    transition: 0.2s;
+}
+
+    .logoDiv img {
+        width: 100%;
+        height: 100%;
+    }
+
+.logo {
+    position: fixed;
+    left: 40px;
+    bottom: 15%;
+    background-color: white;
+    height: 72%;
+    min-height:65%;
+}
+/* 平台及使用者頭像 */
+.imgDiv {
+    min-width: 65px;
+    max-width: 65px;
+    height: 65px;
+    margin: 0 5px;
+}
+
+    .imgDiv img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+
+.scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.displayProblem {
+    display: flex;
+}
+.card{
+    height:100%;
+}
+/* 對話框 */
+.msgDivProblem {
+    height: 95%;
+    max-width: 380px;
+    min-width: 380px;
+    border-bottom: 1px solid lightgray;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+#collapseExample {
+    margin-top: 50px;
+}
+/* 平台 */
+.serviceDiv {
+    max-width: 280px;
+    min-width: 280px;
+}
+
+.serviceMsg {
+    word-wrap: break-word;
+    font-size: 15px;
+    padding:5px 0;
+    box-sizing:border-box;
+}
+
+    .serviceMsg p {
+        color: sienna;
+        font-size: 23px;
+        margin: 2px;
+    }
+
+.qDiv {
+    margin: 5px 0;
+    border: 1px solid rgb(216, 216, 216);
+    box-sizing: border-box;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+/* 使用者 */
+.userDiv {
+    width: 365px;
+    justify-content: right;
+    margin: 10px 0;
+}
+
+.userMsg {
+    word-wrap: break-word;
+    font-size: 15px;
+    box-sizing: border-box;
+    padding: 25px 0;
+}
+/* 輸入框 */
+.txtDiv {
+    margin: 10px 0 0 5px;
+    background-color: transparent;
+    width: 100%;
+}
+
+    .txtDiv input {
+        width: 90%;
+    }
+
+    .txtDiv button {
+        height: 30px;
+        width: 40px;
+        border: none;
+        margin-left: 5px;
+        background-color: transparent;
+    }
+
+    .txtDiv img {
+        height: 100%;
+        width: 100%;
+    }
+    tr{
+        cursor:pointer;
+        font-size:15px;
+    }

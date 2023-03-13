@@ -1,0 +1,416 @@
+﻿@model prjMSIT145_Final.Models.NormalMember
+
+@{
+    ViewData["Title"] = "Login";
+    //Layout = null;
+}
+
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/Customer_css/Login.css">
+    <link rel="stylesheet" href="~/css/Customer_css/CBSonlyClass.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <style>
+        a:link {
+            text-decoration-color: black;
+            text-decoration-line: none;
+        }
+        #txtAccount{
+            width:95%;
+        }
+        #txtEmail{
+            width:95%;
+        }
+        #exampleModalLabel{
+            font-size:1.5em;
+        }
+        #forgotPwd{
+            cursor: pointer;
+        }
+    </style>
+}
+   @* <div style="width:100%; display:flex;">
+        <div style="margin:10px auto; box-sizing:border-box;">
+            <a href="@Url.Content("~/BusinessMember/Blogin")"><img src="~/images/Customer/Navigation/person 32x32.png" />店家登入</a>
+            <a href="@Url.Content("~/Admin/ALogin")"><img src="~/images/Customer/Navigation/person 32x32.png" />平台登入</a>
+        </div>
+    </div>*@
+
+
+@*@using (Html.BeginForm())
+{*@
+    <form asp-action="Login" id="Login" name="Loginname">
+    <div class="wrap" id="wrap">
+        <div class="Content">
+
+            <div class="Head">
+                <p class="toptitle">歡迎使用Daily線上訂餐系統</p>
+                <p class="toptitle2">請選擇登入/註冊方式，通過驗證後即可使用</p>
+                <div>
+                    <input type="button" onclick=location.href="@Url.Content("~/CustomerMember/Register")" class="btnregister divbutton" value="註冊" />
+                </div>
+                    <span id="spanresponse" class="spanresponseclass"></span>
+            </div>
+          
+            <div class="textinput">
+
+                <div class="text">
+
+                    <img src="@Url.Content("~/images/Customer/Member/call.png")" class="img"></img>
+                    <input  id="phoneid" type="text" placeholder="手機號碼" class="text2" name="txtAccount" value=""autofocus />
+                </div>
+                <p class="detail">只支援台灣手機號碼</p>
+                <div class="text">
+
+                    <img src="@Url.Content("~/images/Customer/Member/key.png")" class="img"></img>
+                    <input id="Password" type="password" placeholder="密碼" class="text2" name="txtPassword" />
+                    <i style="margin-left:-26px;margin-top:7px;" class="far fa-eye" id="togglePassword"></i>
+                    <span id="passwordcorrect" class="spanerrormessage"></span>
+                    
+
+                </div>
+
+                <p class="detail2">英文大小寫含數字共6位</p>
+            </div>
+
+            <input id="submitid" type="submit" value="登入" class="login" />
+            <div class="googleline">
+            <div class="googleclass">
+                <div style="margin-bottom:20px;">
+                    <div id="g_id_onload"
+                         data-client_id="274917650943-tcctf041b357aeff8q2um096rutfsrt9.apps.googleusercontent.com"
+                         
+                             data-login_uri="@Url.Content("~/CustomerMember/ValidGoogleLogin")"
+                             data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="icon"
+                         data-size="large"
+                         data-theme="filled_blue"
+                         data-text="sign_in_with"
+                         data-shape="rectangular"
+                         data-logo_alignment="center">
+                    </div>
+                </div>
+            </div>
+            @*<div id="buttonDiv"></div>*@
+            <div class="lineclass">
+                <a href="@Url.Action("LineLoginDirect")">
+                    <img class="imgline" src="@Url.Content("~/images/Customer/Member/btn_base.png")" alt="Line Login" />
+                </a>
+             </div>
+                </div>
+            <div class="display">
+
+                <img src="@Url.Content("~/images/Customer/Member/question.png")" class="img2"></img>
+
+                <p class="text3"><a href=@Url.Action("Forgetpassword","CustomerMember") class="forgotspan" id="forgotPwd">忘記密碼</a></p>
+            </div>
+                <div class="demobtnlogin">
+                    <input type="button" class="democorrect" id="democorrectid" value="" />
+                    <input type="button" class="demoerror" id="demoerrorid" value="" />
+                    <input type="button" class="overclass" id="overid" value="" />
+                    <input type="button" class="tingclass" id="tingid" value="" />
+                </div>
+            <div class="dashed"></div>
+            <div>
+                <span class="text3">登入即代表您同意</span>
+                <span class="text4">使用者條款</span>
+                <span class="text3">和</span>
+                <span class="text4">隱私權條款</span>
+            </div>
+        </div>
+
+    </div>
+    
+    </form>
+
+
+
+
+@*}*@
+@*忘記密碼發信Modal*@
+@*<div class="modal fade" id="sendMail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">發送忘記密碼通知</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="btnCancel" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">請輸入登入手機或帳號:</label>
+                    <input type="text" class="form-control" id="txtAccount" name="txtAccount" value="">
+                </div>
+                <div class="mb-3">
+                    <label for="message-text" class="col-form-label">註冊Email:</label>
+                    <input class="form-control" id="txtEmail" name="txtEmail" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <span class="text-danger" id="pwdInvalid"></span>
+                    <button type="button" style="margin-left:300px;background-color:green" class="btn btn-secondary" id="demobutton">demo</button>
+                <button type="button" class="btn btn-primary" id="btnSendRequest">送出</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*代替alert的Modal*@
+@*<div class="modal fade" id="msgAlert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                   
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseMsg">確定</button>
+                   
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+       
+
+            const passwordicon = document.querySelector("#togglePassword");               
+            const password = document.querySelector("#Password");
+
+        var submitbtn = document.getElementById("submitid");
+
+        
+
+        passwordicon.addEventListener("click", () => {                                //密碼圖示轉換
+
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            passwordicon.classList.toggle('fa-eye-slash');
+        });
+
+
+
+
+
+            submitbtn.addEventListener("click",()=>{
+              
+              
+
+            var passwordobj = document.getElementById("Password");
+            var spnpasswordobj = document.getElementById("passwordcorrect");
+            var passwordval = passwordobj.value;
+
+            if (passwordval == "" || passwordval.length < 6) {
+                spnpasswordobj.innerHTML = "<img src='@Url.Content("~/images/Customer/Member/error.png")'/>格式錯誤";
+                return;
+             }
+             else{
+                if (passwordval.length >= 6) {
+
+                    re = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/);
+
+                    if (re.test(passwordval)) {
+                      
+                        spnpasswordobj.innerHTML = "";
+                        
+                       
+                    }
+                    else {
+                        spnpasswordobj.innerHTML = "<img src='@Url.Content("~/images/Customer/Member/error.png")'/>格式錯誤";
+                       
+                        return;
+                    }
+
+
+                }
+                }
+           
+           });
+
+
+        document.getElementById("submitid").addEventListener('click',async()=>{
+            
+            event.preventDefault();
+
+            let formdata = new FormData(document.Loginname);
+
+            const request = await fetch(`@Url.Content("~/CustomerMember/loginmailverify")`, {
+
+                body: formdata,
+                method: "Post",
+
+            })
+            const data = await request.json();
+            console.log(data);
+            if (data == "帳號或密碼有錯") {
+                document.getElementById("spanresponse").innerHTML = data;
+                return;
+            }
+            else if (data == "尚未開通會員資格") {
+                document.getElementById("spanresponse").innerHTML = data;
+                return;
+            }
+            else if (data == "此帳號被停權") {
+                document.getElementById("spanresponse").innerHTML = data;
+                return;
+            }
+            else {
+                document.getElementById("spanresponse").innerHTML = "";
+                document.getElementById("Login").submit();
+            }
+        
+        
+        
+        
+        });
+           
+
+           
+               
+
+
+
+
+
+        document.getElementById("democorrectid").addEventListener('click', () => {                             //正確DEMO鍵
+            document.getElementById("phoneid").value = "0936212576"
+            document.getElementById("Password").value = "aA1234"
+           
+           
+        });
+
+        document.getElementById("demoerrorid").addEventListener('click', () => {                                 //錯誤
+
+            document.getElementById("phoneid").value = "0987654321";
+            document.getElementById("Password").value = "Aa2222";
+            
+
+        });
+        document.getElementById("overid").addEventListener('click',()=>{
+
+            document.getElementById("phoneid").value = "0912345678";
+            document.getElementById("Password").value = "Aa1111";
+
+
+
+
+        });
+
+        document.getElementById("tingid").addEventListener('click', () => {
+
+            document.getElementById("phoneid").value = "0911223344";
+            document.getElementById("Password").value = "Aa4444";
+
+
+
+
+        });
+
+        $('#spanresponse').text('');
+        let isSus = getUrlParameter('isSus');
+        if(isSus){
+            $('#spanresponse').text('帳號未開通');
+        }
+
+        //抓 url get 參數
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+            return false;
+        }
+
+
+
+        //$(function () {                                                              //忘記密碼
+
+        //    let sendMail = new bootstrap.Modal(document.getElementById('sendMail'), {
+        //        keyboard: false
+        //    });
+        //    let msgAlert = new bootstrap.Modal(document.getElementById('msgAlert'), {
+        //        keyboard: false
+        //    });
+        //    $('#btnCancel').click(function () {
+        //        $('#btnSendRequest').removeAttr('disabled');
+        //        $('#txtAccount').val('');
+        //        $('[name=txtEmail]').val('');
+        //    });
+        //    $('#btnSendRequest').click(function () {                                
+        //        if ($('#txtAccount').val() == '' || $('[name=txtEmail]').val() == '')
+        //            return false;
+                
+        //        $('#btnSendRequest').attr('disabled', 'disabled');
+        //        $.ajax({
+        //            url: `@Url.Content("~/Admin/AForgotAdminPwd")`,
+        //            type: "post",
+        //            data: {
+        //                data: JSON.stringify({
+        //                    txtAccount: $('#txtAccount').val(),
+        //                    txtEmail: $('[name = txtEmail]').val(),
+        //                    memberType: 'N'
+        //                }),
+        //            },
+        //            dataType: "json",
+        //            success: function (msg) {
+        //                console.log(`msg=${msg}`);
+        //                if (`${msg}`.indexOf('success success') > -1) {
+        //                    $('#txtAccount').val('');
+        //                    $('[name=txtEmail]').val('');
+        //                    sendMail.hide();
+        //                    $('#msgAlert label').text('發信成功，請到信箱收取修改密碼通知信');
+        //                    msgAlert.show();
+        //                } else {
+        //                    $('#pwdInvalid').text(msg);
+
+        //                }
+        //                $('#btnSendRequest').removeAttr('disabled');
+        //            },
+        //            error:function(msg){
+        //                console.log(`error msg=${msg}`);
+        //            }
+        //        });
+        //    });
+        //    $('#forgotPwd').click(function () {
+        //        $('#txtAccount').val('');
+        //        $('[name=txtEmail]').val('');
+        //        sendMail.show();
+        //        $('#btnSendRequest').removeAttr('disabled');
+        //        $('#msgAlert label').text('');
+        //        $('#pwdInvalid').text('');
+        //        //$('#txtAccount').val('0986543125');
+        //        //$('[name=txtEmail]').val('rmtorh@hotmail.com');
+
+        //    });
+        //});
+        //document.getElementById("demobutton").addEventListener('click',()=>{
+        //    document.getElementById("txtAccount").value="0936212576";
+        //    document.getElementById("txtEmail").value = "a29803385@hotmail.com";
+
+
+
+        //});
+         
+           
+    </script>   
+}

@@ -1,0 +1,379 @@
+﻿@using System.Text.Json;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>日柴Daily</title>
+    <link rel="shortcut icon" href="~/images/Customer/shiba.ico" />
+    <link href="~/css/Customer_css/CNavigation.css" rel="stylesheet" />
+    <link href="~/css/Customer_css/CFooterstyle.css" rel="stylesheet" />
+    <link href="~/css/Customer_css/bot.css" rel="stylesheet" />
+    <link href="~/css/Customer_css/CBSonlyClass.css" rel="stylesheet" />
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/prjMSIT145_Final.styles.css" asp-append-version="true" />*@
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .spaname{
+            color:white;
+            font-weight:bold;
+        }
+
+        .fixed_footer{
+            position:fixed;
+            bottom:0px;
+            left: 0px;
+            right: 0px;
+        }
+
+         #cartItem {           
+            width: 60px;
+            height: 50px;
+        }
+       .cartOrdersQty{
+        
+         width: 20px;
+         height: 20px;
+         line-height: 20px;  
+         text-align: center;          
+         color: white;
+         font-size: 12px;
+         font-weight: 700;
+         border-radius: 50%;  
+         position: relative;
+         bottom: 60px;
+         left: 50px;
+       }
+        .cartOrdersQty.red{
+            background-color: red;
+        }
+        .Navigationbar_Direct>li{           
+        margin: auto 10px;
+    }
+    .Navigationbar_Direct>li:nth-child(2){
+        padding-top: 42px;
+    }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            border-radius: 0%;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background: #485461;
+        }
+
+    .remotemessage {
+            background-color: #d8d6d2;
+            color: #050505;
+            max-width: 180px;
+            margin-left: 5px;
+            margin-right: 180px;
+        }
+
+
+        .localmessage {
+            background-color: #9f4e27;
+            color: #ffffff;
+            max-width: 180px;
+            margin-right: 5px;
+            margin-left: 180px;
+        }
+
+       
+    </style>
+    
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div id="shell">
+    <header class="Navigationbar_Index">
+        <nav>
+            <ul class="Navigationbar_Direct">
+                <li><a asp-area="" asp-controller="Home" asp-action="CIndex">訂購</a></li>
+                    <li>                        
+                        <div id="cartItem">
+                            <a asp-area="" asp-controller="Order" asp-action="CCartList">購物車</a>
+                        </div>
+                        @{
+                            string nfid = "";
+                            if (Context.Session.Keys.Contains(CDictionary.SK_LOGINED_USER))
+                            {
+                                string json = Context.Session.GetString(CDictionary.SK_LOGINED_USER);
+                                NormalMember x = JsonSerializer.Deserialize<NormalMember>(json);
+                                
+                                if (x != null)
+                                {
+                                    nfid = x.Fid.ToString();                                    
+                                }                               
+                            }
+                                 @*購物車顯示訂單數量小圖示*@
+                                 <div class="cartOrdersQty" data-nfid="@nfid"></div>                                                                                    
+                        }                        
+                </li>
+                <li><a asp-area="" asp-controller="OrderDetial" asp-action="List">訂單</a></li>
+                <li><a asp-area="" asp-controller="Coupon" asp-action="CCouponExchange">兌換專區</a></li>
+                    <li><a asp-area="" asp-controller="CustomerMember" asp-action="CCustomerServiceMailBox">客服信箱</a></li>
+            </ul>
+        </nav>
+        <a class="Navigationbar_Logo" asp-area="" asp-controller="Home" asp-action="CIndex"><img class="Navigationbar_Logo" src="~/images/Customer/Navigation/shibaLogo_row1.png" /></a>
+        <nav>
+             
+            <ul id="alink" class="Navigationbar_Member">
+                    @{
+                        if(Context.Session.Keys.Contains(CDictionary.SK_LOGINED_USER)){
+                            string  json = Context.Session.GetString(CDictionary.SK_LOGINED_USER);
+                            NormalMember x = JsonSerializer.Deserialize<NormalMember>(json);
+                            string membername = x.MemberName;
+                            if(x.MemberPhotoFile!=null){
+
+                                        <li><a href=@Url.Action("Edit","CustomerMember")><img src="@Url.Content($"~/images/Customer/Member/{x.MemberPhotoFile}")" style="width:55px;border-radius:30px" /><span class="spaname">@membername</span><p>&emsp;會員中心</p></a></li>
+                          
+                          }
+                          else{
+                                    <li><a href=@Url.Action("Edit","CustomerMember")><img src="@Url.Content("~/images/Customer/Member/photo.png")" style="width:55px;border-radius:30px" /><span class="spaname">@membername</span><p>&emsp;會員中心</p></a></li>
+                          }
+                            //<li><a id="aloginout" href=@Url.Action("Loginout","CustomerMember", null,new {onclick="return confirm('確定要刪除嗎?')"})><p>登出</p></a></li>
+
+                                                                              <li><p style="margin-top:28px;">@Html.ActionLink("登出", "Loginout","CustomerMember", null,new {onclick="return confirm('確定要登出嗎?')"})</p></li>
+                          
+                    }else{
+                                                                                <li><a href=@Url.Action("Login","CustomerMember")><img src="@Url.Content("~/images/Customer/Navigation/person 32x32.png")" /><p>&emsp;登入 / 註冊</p></a></li>
+                    }
+                }
+               
+            </ul>
+           @* <ul class="Navigationbar_Member">
+                <li><a asp-area="" asp-controller="CustomerMember" asp-action="Edit"><img src="~/images/Customer/Navigation/person 32x32.png" /><p>&emsp;會員 / 編輯</p></a></li>
+            </ul>*@
+        </nav>
+    </header>
+     
+    <main>
+        @RenderBody()
+            
+    </main>
+       
+    <footer class="Copyright">
+        <a asp-area="" asp-controller="Home" asp-action="CIndex"><img class="Footer_Logo" src="~/images/Customer/Navigation/shibaLogo_row1.png" /></a>
+        <p><a asp-area="" asp-controller="Home" asp-action="CIndex">&copy;&ensp;2023&ensp;ShibaDaily&ensp;臺灣</a></p>
+    </footer>
+
+
+        @*Azure機器人  style='min-width: 380px;max-width:380px;height: 100%; border:none;'*@
+        <div class="azureLogo position-fixed"
+             id="azureLogo"
+             data-bs-toggle="collapse"
+             data-bs-target="#azure"
+             aria-expanded="false"
+             aria-controls="azure">
+            <img src="@Url.Content("~/images/Problem/DailyBot.png")" alt="DailyLogo" />
+        </div>
+        <div class="azure collapse position-fixed" id="azure">
+            <div class="card card-body ">
+                <iframe src="https://webchat.botframework.com/embed/shibaqna-bot?s=_Wj2cxQwiJs.D2_mlq1_8gZT02TvLgOhM3KavyshRKsUSsCxW095UH8" style='min-width: 380px;max-width:380px;height: 100%; border:none;'></iframe>
+            </div>
+            
+        </div>
+
+        <!-- 要把collapse 加入id=collapseExample的class裡 -->
+        <!-- 手動刻 -->
+        <div class="logoDiv position-fixed"
+             id="logoDiv"
+             data-bs-toggle="collapse"
+             data-bs-target="#shibaDaily"
+             aria-expanded="false"
+             aria-controls="shibaDaily">
+            <img src="@Url.Content("~/images/Problem/DailyBot.png")" alt="DailyLogo" />
+        </div>
+
+
+        <div class="logo collapse position-fixed" id="shibaDaily">
+            <div class="card card-body" style="">
+                <!-- 以下自己刻 -->
+                <div class="msgDivProblem scroll">
+                    <div class="displayProblem serviceDiv">
+                        <div class="imgDiv"><img src="~/images/Problem/dailyLogo.png" /></div>
+                        <div class="serviceMsg">
+                            你好，請輸入問題，以便為您解答!
+                            <div class="qDiv">
+                                <p>&nbsp;常見問題:</p>
+                                <table class="table table-hover">
+                                    <tr name="trProblem"><td style="border-bottom:1px solid lightgray">變更或取消訂單</td></tr>
+									<tr name="trProblem"><td style="border-bottom:1px solid lightgray">收到的商品有誤</td></tr>
+									<tr name="trProblem"><td style="border-bottom:1px solid lightgray">沒收到優惠券</td></tr>
+									<tr name="trProblem"><td style="border-bottom:1px solid lightgray">帳號無法使用</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="resultDivProblem">
+                        @*<div class="display userDiv">
+                        <div class="userMsg">信用卡退款</div>
+                        <div class="imgDiv"><img src="images/user.png" alt="" /></div>
+                        </div>*@
+                    </div>
+                </div>
+
+                <div class="txtDiv displayProblem">
+                    <input type="text" id="txtProblem" />
+                    <button id="btnSubmitProblem" type="button"><img src="~/images/Problem/send.png" /></button>
+                </div>
+            </div>
+        </div>
+        @*聊聊*@
+        <button type="button" class="btn btn-primary position-fixed" style="right:10px;bottom:0px;width:90px" id="showChatRoomBtn" data-bs-toggle="collapse" data-bs-target="#exampleModal">
+            聊聊 <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2 d-none" id="newMessageAlarm"><span class="visually-hidden">unread messages</span></span>
+        </button>
+        @*隱藏*@
+        <section class="collapse position-fixed p-1 m-0" style="background-color: #eee;width:688px;right:10px;bottom:5px;" id="exampleModal" aria-hidden="true">
+            <div class="container p-0 m-0">
+                <div class="row">
+                    <div class="" style="width: 415px; height: 515px">
+                        <!-- 店名 -->
+                        <div class="card-header d-flex justify-content-between p-3 mb-2"
+                             style="width: 400px">
+                            <p class="fw-bold mb-0" id="ChatNowUser"></p>
+                            <input class="d-none" id="ChatNowUserid" value="" />
+                            <input class="d-none" id="ChatNowUserChatid" value="" />
+                            <input class="d-none" id="ChatNowUserimg" value="" />
+
+                            <p class="text-muted small mb-0"><i class="far fa-clock"></i></p>
+                        </div>
+                        <!-- 聊天內容 -->
+                        <div class="overflow-auto" style="width: 400px; height: 420px ;">
+                            <ul class="list-unstyled" id="ChatMessageul">
+                            </ul>
+                        </div>
+                        <!-- 送出按鈕 -->
+                        <div class="input-group mb-3" style="width: 390px">
+                            <input class="form-control" id="chatMessageInput" type="text" />
+                            <button id="chatMessagebtn"
+                                    type="button"
+                                    class="btn btn-outline-secondary"
+                                    style="width: 30px">
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 用戶 -->
+
+                    <div class="mb-4 mb-md-0 p-0" style="width: 275px">
+                        <div class="card">
+                            <div class="card-body overflow-auto p-1 m-1">
+                                <ul class="list-unstyled mb-0" id="ChatroomItem"
+                                    style="height: 500px; width: 250px">
+                                    @*  聊天室
+                                    <li class="p-2 border-bottom " style="background-color: #eee">
+                                    對方名稱
+                                    <a href="#!" class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row">
+                                    照片
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp"
+                                    alt="avatar"
+                                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+                                    width="30" />
+                                    <div class="pt-1" style="max-width: 150px">
+                                    <p class="fw-bold mb-0 small">在睡五分鐘大安店</p>
+                                    <p id=""></p>
+                                    <p class="fw-bold mb-0 small"></p>
+                                    最後一則訊息
+                                    <p class="small m-0 text-truncate">
+                                    Hello, Are you there? Hello, Are you there? Hello,
+                                    Are you there? Hello, Are you there? Hello, Are you
+                                    there?
+                                    </p>
+                                    </div>
+                                    </div>
+                                    提醒
+                                    <div class="pt-1">
+                                    <span class="badge bg-danger float-end">1</span>
+                                    <p class="small text-muted mb-1">現在</p>
+                                    </div>
+                                    </a>
+                                    </li>*@
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>     
+        <script src="https://unpkg.com/vue@3"></script>
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- <script src="~/js/site.js" asp-append-version="true"></script> -->
+
+    @await RenderSectionAsync("UpperScripts", required: false)
+    <script>
+        $(function(){
+            let nfid= $('.cartOrdersQty').data('nfid');
+            //console.log(`nfid=${nfid}`);
+            if (nfid > 0){
+                    $.ajax({
+                        url: `@Url.Content("~/CustomerMember/getCartOrderQty")`,
+                        type: 'post',
+                        data: {
+                            data: nfid
+                        },
+                        dataType: 'json',
+                        success: function (msg) {
+                            $('.cartOrdersQty').text(msg);
+                            if(msg != '')
+                                $('.cartOrdersQty').addClass('red');
+                        }
+                    });
+            }else{
+                    $('.cartOrdersQty').text('');
+                    $('.cartOrdersQty').removeClass('red');
+            }
+            
+            changeFooter();
+
+            $(window).resize(function(){
+                changeFooter();
+            });
+
+            function changeFooter(){
+                let shellHeight = $('#shell').height();
+                let windowHeight = $(window).height()-90;            
+
+                if (windowHeight < shellHeight) {
+                    $('.Copyright').removeClass('fixed_footer');
+                }
+                else{
+                    $('.Copyright').addClass('fixed_footer');
+                }
+            }
+
+        });
+
+   
+
+           
+    </script>
+        <script src="@Url.Content("~/js/signalr/dist/browser/signalr.js")"></script>
+        <script src="@Url.Content("~/js/ChatRoom.js")"></script>
+        <script src="@Url.Content("~/js/bot.js")"></script>  @*機器人Js檔*@
+        @await RenderSectionAsync("Scripts", required: false)
+    </div>
+</body>
+</html>

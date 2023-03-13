@@ -1,0 +1,152 @@
+﻿@model prjMSIT145_Final.ViewModels.CResetPwdViewModel
+
+@{
+    ViewData["Title"] = "忘記密碼/修改密碼";
+   Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+@section Styles{
+    <link href="@Url.Content("~/css/customer_css/cbsonlyclass.css")" rel="stylesheet" />
+    <style>
+        .row.rp {
+            width: 50%;
+            margin: 10% auto;
+        }
+
+        .col-md-4.rp {
+            margin: 0 auto;
+        }
+
+        .col-md-4.rp > div {
+            margin: 10px auto;
+        }
+
+        #btnSubmitResetPwd {
+            margin-top: 10px;
+        }
+    </style>
+}
+<!DOCTYPE html>
+
+
+
+<div>
+
+<div class="row rp">
+            <div class="col-md-4 rp">
+        <form asp-action="ResetPwd" name="ResetPwdForm">                   
+            <input asp-for="txtAccount" class="form-control" type="hidden" value="" />
+            <input asp-for="token" class="form-control" type="hidden" value="" />
+            <input asp-for="tp" class="form-control" type="hidden" value="" />
+            <div class="form-group">
+                <label asp-for="txtPassword" class="control-label">輸入新密碼</label>
+                <input asp-for="txtPassword" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="txtConfirmPwd" class="control-label">再次輸入新密碼</label>
+                <input asp-for="txtConfirmPwd" class="form-control" type="password" />
+                
+            </div>
+            <div class="form-group">
+                <input type="button" value="送出" class="btn btn-secondary" id="btnSubmitResetPwd" />
+                       
+            </div>
+                <span name="txtConfirmPwd" class="text-danger" id="pwdInvalid"></span>
+        </form>
+    </div>
+</div>
+        <div class="modal fade" id="msgAlert" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseMsg">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            $(function () {
+                let msgAlert = new bootstrap.Modal(document.getElementById('msgAlert'), {
+                    keyboard: false
+                });
+                let token = getUrlParameter('token');
+                let acc = getUrlParameter('acc');
+                let tp = getUrlParameter('tp');
+                //console.log(`token=${token}`);
+                //console.log(`acc=${acc}`);
+
+                $('#btnCloseMsg').click(function () {  
+                    if(tp=='A')
+                        location.replace('@Url.Action("ALogin","Admin")');
+                    else if(tp=='N')
+                        location.replace('@Url.Action("Login","CustomerMember")');
+                });
+
+                $('[name=token]').val(token);
+                $('[name=txtAccount]').val(acc);
+                $('[name=tp]').val(tp);
+                $('#btnSubmitResetPwd').click(async function () {
+                    event.preventDefault();
+
+                    let pwdInvalid = $('#pwdInvalid');
+                    pwdInvalid.text('');
+                    let txtPwd = $('input[name=txtPassword]').val();
+                    let txtConPwd = $('input[name=txtConfirmPwd]').val();
+                    if ((txtPwd != '' || txtConPwd != '') && txtPwd != txtConPwd) {
+                        pwdInvalid.text('兩次輸入的密碼不符');
+                        return false;
+                    }
+                    if (txtPwd.trim() == '' || txtConPwd.trim() == '') {
+                        return false;
+                    }
+
+                    let formData = new FormData(document.ResetPwdForm);
+                    let f = await fetch(`@Url.Content("~/Admin/submitResetPwd")`, {
+                        body: formData,
+                        method: "post",                        
+                    });
+                    let msg = await f.text();
+
+                    console.log(`msg=${msg}`);
+
+                    if (`${msg}`.indexOf('success success') > -1) {                        
+                        $('#msgAlert label').text('修改成功，請用新密碼重新登入。');
+                        msgAlert.show();                        
+                    }else{
+                        //console.log(msg);
+                        //alert('已超過修改密碼的期限，請重新點擊忘記密碼連結');
+                        $('#msgAlert label').text(`${msg}`);
+                        msgAlert.show();
+                        
+                    }
+                });
+
+                //抓 url get 參數
+                function getUrlParameter(sParam) {
+                    var sPageURL = window.location.search.substring(1),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                        }
+                    }
+                    return false;
+                }
+            });
+        </script>
+}
+</div>
+

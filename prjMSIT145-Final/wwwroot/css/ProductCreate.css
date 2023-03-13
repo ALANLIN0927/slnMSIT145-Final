@@ -1,0 +1,92 @@
+.outerlayer {
+    width: 60%;
+    margin: 0 auto;
+
+}
+
+.textarea {
+    width: 100%;
+    border-radius: 10px;
+    min-height: 100px;
+    background-color:transparent;
+}
+
+.topdiv {
+    height: 80px;
+    width:100%;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    border-bottom: 1px gray solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inputtext {
+    border-width: 0;
+    font-size: 20px;
+    width: 100%;
+    background-color: transparent;
+}
+
+.back {
+    width: 40px;
+    height: 40px;
+    margin-top: -120px;
+}
+
+.butt {
+    border-radius: 10px;
+    /*margin-left: 20px;*/
+    width: 50px;
+    background-color: black;
+    color: white;
+}
+
+#h6 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.inputimage {
+    width: 60px;
+}
+
+.divimage {
+    display: flex;
+    justify-content: space-around;
+    width:100%;
+}
+
+.p {
+    font-weight: bold;
+}
+
+.divinputimagebutton {
+    display: flex;
+    justify-content:space-around;
+}
+
+.inputimagebutton {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    height: 40px;
+}
+
+.text {
+    width: 30%;
+    height: 35px;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 1px solid;
+    margin-left: 10px;
+    box-sizing:border-box;
+    padding:0 10px;
+}
+
+.select {
+    width: 200px;
+    border-radius: 5px;
+    margin:30px 0 10px 0;
+}
